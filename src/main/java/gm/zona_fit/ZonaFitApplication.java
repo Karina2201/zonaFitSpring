@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class ZonaFitApplication implements CommandLineRunner {
 
 	@Autowired
@@ -46,7 +46,7 @@ public class ZonaFitApplication implements CommandLineRunner {
 	private int mostrarMenu(Scanner consola){
 		logger.info("""
 		\n***Aplicacion Zona Fit (Gym)***
-		----------MENU---------
+		------------MENU-----------
 		1. Listar clientes
 		2. Buscar cliente por id
 		3. Agregar cliente
