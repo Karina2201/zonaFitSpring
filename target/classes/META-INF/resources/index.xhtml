@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <h:html xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="htpp://xmlns.jcp.org/jcf/core"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
-
-    <h:head>
-        <title>Zona Fit (GYM)</title>
+    <h:head><title>Zona Fit (GYM)</title>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
     </h:head>
     <h:body>
-        <div class="flex justify-content-center flex-wrap card-container yellow-container">
-            <div class="flex aling-items-center justify-content-center
-                            w-20rem h-4rem bg-yellow-500 font-bold
-                            text-gray-900 border-round m-2">
-                <h3>Zona Fit (GYM)</h3>
-            </div>
+        <div class="card">
+            <h:form id="forma-clientes">
+                <p:growl id="mensajes" showDetails="true"/>
+                <div class="card">
+                    <p:menubar>
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user" update=":forma-clientes:clientes-tabla"
+                                    actionListener="#{indexController.cargarDatos}"/>
+                    </p:menubar>
+                </div>
+                <!-- DataTable -->
+                <div class="card">
+                    <p:dataTable value="#{indexController.clientes}" var="cliente"
+                                 id="clientes-tabla" widgetVar="clientesTabla">
+                        <f:facet name="header">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
+                                    <h3>Zona Fit (GYM)</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+                    </p:dataTable>
+                </div>
+            </h:form>
         </div>
-    </h:body>
 
+    </h:body>
 </h:html>

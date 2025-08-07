@@ -2,9 +2,10 @@ package gm.zona_fit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class ZonaFitWeb {
+public class ZonaFitWeb extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(ZonaFitWeb.class, args);
