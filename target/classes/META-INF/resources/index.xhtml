@@ -14,6 +14,10 @@
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="pi pi-fw pi-user" update=":forma-clientes:clientes-tabla"
                                     actionListener="#{indexController.cargarDatos}"/>
+                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
+                                    actionListener="#{indexController.agregarCliente}"
+                                    update=":forma-modal:cliente-ventana"
+                                    oncomplete="PF('ventanaModalCliente').show()"/>
                     </p:menubar>
                 </div>
                 <!-- DataTable -->
@@ -27,8 +31,88 @@
                                 </div>
                             </div>
                         </f:facet>
+                        <p:column headerText="ID">
+                            <h:outputText value="#{cliente.id}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE">
+                            <h:outputText value="#{cliente.nombre}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+                        <p:column headerText="MEMBRESIA">
+                            <h:outputText value="#{cliente.membresia}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Editar" icon="pi pi-pencil"
+                                             update=":forma-modal:cliente-ventana"
+                                             process="@this"
+                                             oncomplete="PF('ventanaModalCliente').show()"
+                                             class="ui-button-primary"
+                                             style="margin-right: .5rem">
+                                <f:setPropertyActionListener
+                                    value="#{cliente}"
+                                    target="#{indexController.clienteSeleccionado}"/>
+                                <p:resetInput target=":forma-modal:cliente-ventana"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="Eliminar" class="ui-button-danger"
+                                             icon="pi pi-trash"
+                                             process="@this"
+                                             oncomplete="PF('eliminarClienteVentana').show()">
+                                <f:setPropertyActionListener
+                                    value="#{cliente}"
+                                    target="#{indexController.clienteSeleccionado}"/>
+                            </p:commandButton>
+                        </p:column>
                     </p:dataTable>
                 </div>
+            </h:form>
+            <h:form id="forma-modal">
+                <p:dialog header="Detalles Cliente" showEffect="fade"
+                          modal="true" widgetVar="ventanaModalCliente"
+                          responsive="true">
+                    <p:outputPanel id="cliente-ventana" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                            <p:inputText id="nombre"
+                                         value="#{indexController.clienteSeleccionado.nombre}"
+                                         required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
+                            <p:inputText id="apellido"
+                                         value="#{indexController.clienteSeleccionado.apellido}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="membresia">Membresia</p:outputLabel>
+                            <p:inputNumber id="membresia"
+                                           value="#{indexController.clienteSeleccionado.membresia}"
+                                            required="true"/>
+                        </div>
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                         process="cliente-ventana @this"
+                                         actionListener="#{indexController.guardarCliente}"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times"
+                                         onclick="PF('ventanaModalCliente').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+                <p:confirmDialog widgetVar="eliminarClienteVentana"
+                                 showEffect="fade" width="300"
+                                 message="Eliminar el cliente?"
+                                 header="Confirmar" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check"
+                                     actionListener="#{indexController.eliminarCliente}"
+                                     process="@this"
+                                     oncomplete="PF('eliminarClienteVentana').hide()"/>
+                    <p:commandButton value="No" type="button"
+                                     styleClass="ui-button-secondary"
+                                     icon="pi pi-times"
+                                     onclick="PF('eliminarClienteVentana').hide()"/>
+                </p:confirmDialog>
             </h:form>
         </div>
 
